@@ -12,6 +12,6 @@ multiplyButton.addEventListener('click', function () {
     const answer = multiply(n1, n2);
 
     answerEl.innerHTML = answer.toString();
-})
-//console.log('Ready to Party With Some TypeScript!');
+});
+// console.log('Ready to Party With Some TypeScript!');
 
