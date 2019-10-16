@@ -1,3 +1,5 @@
+import { inflate } from 'zlib';
+
 describe('Variables in Typescript', () => {
     it('any typing', () => {
         let x;
@@ -129,6 +131,113 @@ describe('types', () => {
 
             type ThingyWithLetters = string;
             const myName: ThingyWithLetters = 'jeff';
+        });
+    });
+
+    describe('enums and ubnito constants', () => {
+        describe('enum', () => {
+            it('has them', () => {
+                // enum SeatType { window, ailse, middle }
+                type SeatType = 'window' | 'aisle' | 'middle';
+                let seatType: SeatType;
+                seatType = (function () {
+                    return 'window' as SeatType;
+                })();
+                let price = 100;
+                switch (seatType) {
+                    case 'window': {
+                        price += 50;
+                        break;
+                    }
+                    case 'aisle': {
+                        price -= 25;
+                        break;
+                    }
+                    case 'middle': {
+                        price += 10;
+                        break;
+                    }
+                    default: {
+                        // optional - but if it isn't one of those
+                    }
+                }
+                expect(price).toBe(150);
+            });
+        });
+    });
+
+    describe('object literals', () => {
+        it('has anonymous objects', () => {
+            interface Movie {
+                title: string;
+                director: string;
+                yearReleased: number;
+                mainActor?: string;
+            }
+
+            const thor: Movie = {
+                title: 'Thor Ragnorak',
+                director: 'Taika Waititi',
+                yearReleased: 2016
+            };
+
+            const drStrange: Movie = {
+                title: 'Dr. Strange',
+                director: 'Jeremy',
+                yearReleased: 2017,
+                mainActor: 'Bennie Cumberbatch'
+            };
+
+
+            expect(thor.title).toBe('Thor Ragnorak');
+
+            thor.yearReleased = 2015;
+            expect(thor.yearReleased).toBe(2015);
+
+            thor.mainActor = 'Chris Hemsworth';
+
+        });
+        it('duck typing', () => {
+            interface IHaveAMessage { message: string; }
+            function doIt(thingy: IHaveAMessage) {
+                console.log(thingy.message);
+            }
+
+            doIt({ message: 'Hello!' });
+
+            const phoneCall = {
+                from: 'Mom',
+                message: 'Call me, you slacker!'
+            };
+
+            doIt(phoneCall);
+        });
+    });
+
+    describe('Type Assertion', () => {
+        it('they are likr type casts but they dont\'t do anything but tell the compiler to calm down', () => {
+            let x: any;
+
+            x = (function () {
+                return 'dog';
+            })();
+
+            const length: number = (x as string).length;
+            const length2: number = (x as string).length;
+            expect(length).toBe(3);
+
+            interface ValueAndString { value: number; display: string; }
+
+            const numbers = [100, 89];
+            const result = numbers.map(num => {
+                return {
+                    value: num,
+                    display: num.toString()
+                } as ValueAndString;
+            });
+
+            expect(result[0].value).toBe(100);
+            expect(result[0].display).toBe('100');
         });
     });
 });
