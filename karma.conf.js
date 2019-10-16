@@ -4,11 +4,22 @@ module.exports = (config) => {
     config.set({
         frameworks: ['jasmine', 'karma-typescript'],
 
-        files: [
-            { pattern: 'spec/*.spec.js', watched: false },
-            { pattern: 'spec/**/*.spec.js', watched: false },
-          { pattern: 'spec/*.spec.ts', watched: false },
-            { pattern: 'spec/**/*.spec.ts', watched: false }
+        files: [{
+                pattern: 'spec/*.spec.js',
+                watched: false
+            },
+            {
+                pattern: 'spec/**/*.spec.js',
+                watched: false
+            },
+            {
+                pattern: 'spec/*.spec.ts',
+                watched: false
+            },
+            {
+                pattern: 'spec/**/*.spec.ts',
+                watched: false
+            }
         ],
 
         preprocessors: {
@@ -23,7 +34,7 @@ module.exports = (config) => {
         reporters: ['progress', 'karma-typescript'],
 
         browsers: ['ChromeHeadless'], // or just 'Chrome', 'ie', 'firefox', etc.
-   
-        
+
+
     });
 };
