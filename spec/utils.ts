@@ -7,3 +7,5 @@ export function isEven(a: number) {
 export function itdoubles(a: number) {
     return a * 2;
 }
+
+export const accumulate = (state: number, next: number) => state + next;

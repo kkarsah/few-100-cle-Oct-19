@@ -1,4 +1,4 @@
-import { isEven, itdoubles } from './utils';
+import { isEven, itdoubles, accumulate } from './utils';
 
 describe('functions', () => {
   it('how to declare them ', () => {
@@ -171,6 +171,56 @@ describe('higher order functions', () => {
           expect(someEven).toBe(true);
 
         });
+        it('has reduce', () => {
+          const total = numbers.reduce((s, n) => s + n);
+          expect(total).toBe(45);
+
+          const total2 = numbers.reduce((s, n) => s + n, 100);
+          expect(total2).toBe(145);
+
+          const totalofDoubledEvens = numbers
+            .filter(isEven)
+            .map(itdoubles)
+            .reduce(accumulate);
+
+          expect(totalofDoubledEvens).toBe(40);
+        });
+
+        it('practice', () => {
+          interface CartItem {
+            name: string;
+            qty: number;
+            price: number;
+          }
+
+          const cart: CartItem[] = [
+            { name: 'Eggs', qty: 1, price: 2.99 },
+            { name: 'Bread', qty: 3, price: 3.50 },
+            { name: 'Shampoo', qty: 2, price: 7.25 }
+          ];
+
+          interface ShippingInfo {
+            totalQty: number;
+            totalPrice: number;
+          }
+
+          // how would we use reduce to get the shipping info from
+          // this cart. (the total number of things, the total price.)
+
+          const initialState: ShippingInfo = {
+            totalQty: 0,
+            totalPrice: 0
+          };
+
+          const answer = cart.reduce((s: ShippingInfo, n: CartItem) => {
+            return {
+              totalQty: s.totalQty + n.qty,
+              totalPrice: s.totalPrice + (n.qty * n.price)
+            } as ShippingInfo;
+          }, initialState);
+          console.log('The answer is : ', answer);
+        });
+
       });
     });
   });
